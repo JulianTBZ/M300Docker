@@ -1,0 +1,10 @@
+Doku
+
+Journal
+Als erstes habe ich mich bei Github mit der TBZ E-Mail registriert. 
+Anschliessend eine Virtuelle Maschiene (Ubuntu) mit VMFusion aufgesetzt. 
+Github darin verknüpft. 
+Virtual Box installiert.
+Vagrant installiert. 
+Automatisch eine VM erstellen lassen mit Vagrant. 
+Probleme beim Starten der VM. (Es bleibt alles Schwarz.)
