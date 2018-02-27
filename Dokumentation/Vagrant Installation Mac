@@ -1,4 +1,5 @@
-Als erstes habe ich Vagrant von der Webseite heruntergeladen. 
+#Vagrant installation Mac
+Als erstes habe ich Vagrant von der Webseite heruntergeladen.
 Anschliessend installiert und getestet. 
 Da ich es mit VMWare Fusion machen wollte musste ich noch ein zusätzliches Plugin installieren, 
 da WMWare Fusion nicht direkt als provider erkannt wird. Wie sich beim Ausführen des Plugins gezeigt hat wird eine
@@ -8,10 +9,10 @@ Mit 'vagrant init ubuntu/trusty64' wird das benötigte Vagrantfile erstellt.
 Mit 'vagrant up' wird die VM dann mit den Informationen der Datei erstellt. 
 
 Als alternative zu den Vordefinierten Vagrantfiles habe ich meine eigene Datei erstellt um direkt einen Apache2 
-Server darauf zu installieren. 
+Server darauf zu installieren.
 Die genaue Configurationseinstellungen können in der Datei Vagrant_Test1_Apache1_Server gefunden werden. 
 Dieses befindet sich in den Config Files/Vagrantfiles
 Dieses File kann auch verwendet werden um andere Dienste oder Services zu installieren während der installation.
 Die Befehle zur installation können dazu nach der Zeile 
   config.vm.provision "shell", inline: <<-SHELL
-eingefügt werden. 
+eingefügt werden.
