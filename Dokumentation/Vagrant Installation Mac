@@ -11,3 +11,7 @@ Als alternative zu den Vordefinierten Vagrantfiles habe ich meine eigene Datei e
 Server darauf zu installieren. 
 Die genaue Configurationseinstellungen können in der Datei Vagrant_Test1_Apache1_Server gefunden werden. 
 Dieses befindet sich in den Config Files/Vagrantfiles
+Dieses File kann auch verwendet werden um andere Dienste oder Services zu installieren während der installation.
+Die Befehle zur installation können dazu nach der Zeile 
+  config.vm.provision "shell", inline: <<-SHELL
+eingefügt werden. 
