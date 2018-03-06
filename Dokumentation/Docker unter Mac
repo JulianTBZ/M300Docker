@@ -34,7 +34,11 @@ EXPOSE 80
 
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
 ```
-Als erstes wird mit `FROM ubuntu` definiert, dass das aktuellste Ubuntu Betriebssystem verwendet wird. 
+Jedes Dockerfile benötigt zwingend als erstes eine definition `FROM`.
+Dort muss angegeben, welches OS verwendet wird. 
+Ich habe mich für Ububtu entschieden.`FROM ubuntu`
+Mit `FROM ubuntu:14.10` dem `:` kann noch die Version definiert werden. 
+Wenn nichts definiert wurde, wird immer die neuste Version verwendet. 
 Anschliessend werden mit `RUN` die benötigten Befehle ausgeführt. 
 Mir dem Befehl `ENV` werden noch einige anpassungen an der Configuration gemacht.
 
@@ -44,4 +48,4 @@ Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden.
 Nach -f muss der Pfad zur Datei mit dem Namen Dockerfile anegeben werden.
 
 ## Run Docker image
-Mit dem Befehl `docker run -ti ubuntu:latest /bin/sh` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. 
+Mit dem Befehl `docker run -ti ubuntu:latest /bin/sh` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden. 
