@@ -1,0 +1,16 @@
+# Docker unter Mac
+## Einleitung 
+
+Aktuell verwende ich die Mac Version `macOS Sierra 10.12.6`.
+Das Ziel ist einen Apache Webserver direkt aus dem Docker File zu erstellen.
+Dieses soll jeder Zeit erneut ausgeführt und duppliziert werden können.
+
+## Docker installation
+
+Als erstes muss Docker auf dem Mac installiert werden. 
+Die aktuelle Version kann unter dem folgenden Link heruntergeladen werden. 
+[https://download.docker.com/mac/stable/Docker.dmg]
+
+Nach dem Download kann das DMG wie eine normale App installiert und gestartet werden. 
+Docker wird während der Installation die Administrationsrechte abfragen. 
+Diese werden benötigt um den Docker komplett installieren zu können. 
