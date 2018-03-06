@@ -1,0 +1,47 @@
+# Docker unter Mac
+## Einleitung 
+
+Aktuell verwende ich die Mac Version `macOS Sierra 10.12.6`.
+Das Ziel ist einen Apache Webserver direkt aus dem Docker File zu erstellen.
+Dieses soll jeder Zeit erneut ausgeführt und duppliziert werden können.
+
+## Docker installation
+
+Als erstes muss Docker auf dem Mac installiert werden. 
+Die aktuelle Version kann unter dem folgenden Link heruntergeladen werden. 
+[https://download.docker.com/mac/stable/Docker.dmg]
+
+Nach dem Download kann das DMG wie eine normale App installiert und gestartet werden. 
+Docker wird während der Installation die Administrationsrechte abfragen. 
+Diese werden benötigt um den Docker komplett installieren zu können.
+Sobald Docker installiert wurde wird ein Symbol in der Menu-Leiste angezeigt. 
+
+## Apache2 Dockerfile
+
+Als erstes möchte ich versuchen einen Docker mit Apache2 zu erstellen.
+Mein erstes Testfile sieht wie folgt aus. 
+```
+FROM ubuntu
+
+RUN apt-get update
+RUN apt-get install -y apache2 && apt-get autoremove 
+
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
+```
+Als erstes wird mit `FROM ubuntu` definiert, dass das aktuellste Ubuntu Betriebssystem verwendet wird. 
+Anschliessend werden mit `RUN` die benötigten Befehle ausgeführt. 
+Mir dem Befehl `ENV` werden noch einige anpassungen an der Configuration gemacht.
+
+## Build Dockerfile
+`docker image build -f Dockerfile .`
+Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden. 
+Nach -f muss der Pfad zur Datei mit dem Namen Dockerfile anegeben werden.
+
+## Run Docker image
+Mit dem Befehl `docker run -ti ubuntu:latest /bin/sh` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. 
