@@ -42,10 +42,20 @@ Wenn nichts definiert wurde, wird immer die neuste Version verwendet.
 Anschliessend werden mit `RUN` die benötigten Befehle ausgeführt. 
 Mir dem Befehl `ENV` werden noch einige anpassungen an der Configuration gemacht.
 
-## Build Dockerfile
-`docker image build -f Dockerfile .`
-Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden. 
-Nach -f muss der Pfad zur Datei mit dem Namen Dockerfile anegeben werden.
+### Build Dockerfile
+`docker build -t julianbersnak/apache2:1.0 .`
+Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden.
+Nach -t kann der Name des Images angegeben werden.
 
-## Run Docker image
-Mit dem Befehl `docker run -ti ubuntu:latest /bin/sh` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden. 
+Mit `docker images` werden alle verfügbaren images angezeigt. 
+### Run Docker image
+Mit dem Befehl ` docker run -t julianbersnak/apache2:1.0 /bin/bash` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Da es sich aber nicht um eine vollständige VM handelt, sondern um eine minimierte Version. Kann es sein das nicht alle Befehle oder Verzeichnisse vorhanden sind, welche bei einer VM vorhanden wären.  Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden.
+
+### Docker infos anzeigen
+Nachdem man den Docker Container wieder verlassen hat, kann man mit `docker ps -a` die Container history anzeigen. Diese sollte ähnlich wie die folgende liste aussehen. 
+
+| CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
+| ---------- | :----------: | :----------: | :----------: | :----------: | :----------: | :---------- | 
+| 6f3f9a255dd | julianbersnak/apache2:1.0 | "/bin/bash" | 2 minutes ago | Up 2 minutes | 80/tcp | wizardly_heisenberg
+
+
