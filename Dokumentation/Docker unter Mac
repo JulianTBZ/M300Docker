@@ -16,7 +16,7 @@ Docker wird während der Installation die Administrationsrechte abfragen.
 Diese werden benötigt um den Docker komplett installieren zu können.
 Sobald Docker installiert wurde wird ein Symbol in der Menu-Leiste angezeigt. 
 
-## Apache2 Dockerfile
+## Apache2 Dockerfile erster Versuch
 
 Als erstes möchte ich versuchen einen Docker mit Apache2 zu erstellen.
 Mein erstes Testfile sieht wie folgt aus. 
@@ -43,11 +43,11 @@ Anschliessend werden mit `RUN` die benötigten Befehle ausgeführt.
 Mir dem Befehl `ENV` werden noch einige anpassungen an der Configuration gemacht.
 
 ### Build Dockerfile
-`docker build -t julianbersnak/apache2:1.0 .`
+`docker build -t julianbersnak/apache2:1.0 .`  
 Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden.
 Nach -t kann der Name des Images angegeben werden.
 
-Mit `docker images` werden alle verfügbaren images angezeigt. 
+Mit `docker images` werden alle verfügbaren images angezeigt.   
 ### Run Docker image
 Mit dem Befehl ` docker run -t julianbersnak/apache2:1.0 /bin/bash` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Da es sich aber nicht um eine vollständige VM handelt, sondern um eine minimierte Version. Kann es sein das nicht alle Befehle oder Verzeichnisse vorhanden sind, welche bei einer VM vorhanden wären.  Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden.
 
@@ -55,7 +55,43 @@ Mit dem Befehl ` docker run -t julianbersnak/apache2:1.0 /bin/bash` kommen wir a
 Nachdem man den Docker Container wieder verlassen hat, kann man mit `docker ps -a` die Container history anzeigen. Diese sollte ähnlich wie die folgende liste aussehen. 
 
 | CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
-| ---------- | :----------: | :----------: | :----------: | :----------: | :----------: | :---------- | 
-| 6f3f9a255dd | julianbersnak/apache2:1.0 | "/bin/bash" | 2 minutes ago | Up 2 minutes | 80/tcp | wizardly_heisenberg
+| :---------- | :----------: | :----------: | :----------: | :----------: | :----------: | ----------: | 
+| 6f3f9a255dd | julianbersnak/apache2:1.0 | "/bin/bash" | 2 minutes ago | Up 2 minutes | 80/tcp | wizardly_heisenberg |
+
+Mir `docker inspect 6f3f9a255dd` können die infos des Containers angezeigt werden. So kann man einfach den Hostnamen und die IP herausfinden. Es werden jedoch noch viel mehr informationen angezeigt. Jedoch kann ich nicht via Browser auf den Webserver zugreiffen. 
+
+## Apache2 Dockerfile zweiter Versuch
+
+Im zweiten Docker file installiere ich noch zusätzlich die aktuellen Upgrades. 
+
+```
+FROM ubuntu:latest
+
+#Install updates
+RUN apt-get update
+RUN apt-get -y install apt-utils
+RUN apt-get -y upgrade
+
+#Install Webserver
+RUN apt-get -y install apache2
+
+#Change config
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+
+EXPOSE 80
+
+#Start apache2
+CMD /usr/sbin/apache2ctl -D FOREGROUND
+```
 
 
+## Hilfreiche Commands
+Alle Docker Stoppen `docker stop $(docker ps -a -q)`  
+Alle Docker Löschen `docker rm $(docker ps -a -q)`  
+Docker erstellen `docker build -t Docker_NAME:Version .`  
+Docker starten `docker run Docker_NAME:Version`  
+Docker infos anzeigen `docker inspect Docker_ID`  
