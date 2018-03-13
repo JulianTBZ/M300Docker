@@ -87,7 +87,12 @@ EXPOSE 80
 #Start apache2
 CMD /usr/sbin/apache2ctl -D FOREGROUND
 ```
-Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1.0` startet kann man die Webseite wie von einem normalen Server aufrufen. 
+Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1.0` startet kann man die Webseite wie von einem normalen Server aufrufen.  
+
+## Docker Security
+
+### Uncomplicated Firewall (UFW)
+
 
 ## Hilfreiche Commands
 Alle Docker Stoppen `docker stop $(docker ps -a -q)`  
