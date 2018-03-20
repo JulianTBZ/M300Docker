@@ -16,4 +16,3 @@ Dieses File kann auch verwendet werden um andere Dienste oder Services zu instal
 Die Befehle zur installation können dazu nach der Zeile 
   ```config.vm.provision "shell", inline: <<-SHELL```
 eingefügt werden.
-

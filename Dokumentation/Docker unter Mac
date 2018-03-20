@@ -49,7 +49,7 @@ Nach -t kann der Name des Images angegeben werden.
 
 Mit `docker images` werden alle verfügbaren images angezeigt.   
 ### Run Docker image
-Mit dem Befehl ` docker run -t julianbersnak/apache2:1.0 /bin/bash` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Da es sich aber nicht um eine vollständige VM handelt, sondern um eine minimierte Version. Kann es sein das nicht alle Befehle oder Verzeichnisse vorhanden sind, welche bei einer VM vorhanden wären.  Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden.
+Mit dem Befehl ` docker run -ti julianbersnak/apache2:1.0 /bin/bash` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Da es sich aber nicht um eine vollständige VM handelt, sondern um eine minimierte Version. Kann es sein das nicht alle Befehle oder Verzeichnisse vorhanden sind, welche bei einer VM vorhanden wären.  Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden.
 
 ### Docker infos anzeigen
 Nachdem man den Docker Container wieder verlassen hat, kann man mit `docker ps -a` die Container history anzeigen. Diese sollte ähnlich wie die folgende liste aussehen. 
@@ -92,6 +92,14 @@ Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1
 ## Docker Security
 
 ### Uncomplicated Firewall (UFW)
+Die Installation der Firewall direkt aus dem Dockerfile geht ohne Probleme. Die Firewall wird korrekt installiert und kann direkt Konfiguriert und gestartet werden. Was leider bisher noch nicht geht ist, dass die Firewall auch automatisch gestartet wird. Obwohl der Befehl dazu im Dockerfile integriert ist, ist der Status der Firewall nach dem Start `inactive`.
+```
+root@e5531787bfa0:/# ufw status
+Status: inactive
+root@e5531787bfa0:/# ufw enable
+Firewall is active and enabled on system startup
+root@e5531787bfa0:/# 
+``` 
 
 
 ## Hilfreiche Commands
@@ -100,3 +108,4 @@ Alle Docker Löschen `docker rm $(docker ps -a -q)`
 Docker erstellen `docker build -t Docker_NAME:Version .`  
 Docker starten `docker run Docker_NAME:Version`  
 Docker infos anzeigen `docker inspect Docker_ID`  
+Docker Bash Shell aufrufen `docker run -ti Docker_NAME:Version /bin/bash`
