@@ -16,3 +16,29 @@ Dieses File kann auch verwendet werden um andere Dienste oder Services zu instal
 Die Befehle zur installation können dazu nach der Zeile 
   ```config.vm.provision "shell", inline: <<-SHELL```
 eingefügt werden.
+
+Als zweites habe ich das Vagrantfile Apache2 so angepasst, dass zusätzlich noch die UFW Firewall direkt installiert und konfiguriert wird. 
+Detailierte Informationen zum Code finden Sie unter `/Dokumentationen/Config Files/Vagrantfiles/Apache2.1` 
+```
+    apt-get -y install ufw
+    ufw -f enable
+    ufw allow 80/tcp
+    ufw allow from julianbersnakmbp to any port 22
+    ufw reload
+```
+Als erstes muss die Firewall installiert werden. Den Parameter -y gebe ich mit, um sicher zu gehen das sie auch installiert wird und der Host nicht nach der Bewilligung dafür fragen muss. Anschliessend wird die Firewall enabeld. Danach werden noch einige Konfigurationen vorgenommen. Port 80/tcp wird geöffnet und auch die SSH Verbindung von meinem MAC wird zugelassen. Um die Konfigurationen zu aktivieren muss die UFW Firewall noch neu geladen werden mit reload. apt-get -y install ufw
+    ufw -f enable
+    ufw allow 80/tcp
+    ufw allow from julianbersnakmbp to any port 22
+    ufw reload
+
+## Testing
+
+| Beschreib | Soll-Zustand | Ist-Zustand |
+| -------- | -------- | -------- |
+| SSH Connect   | Ich kann von meinem Localhost auf den Vagrant Server zugreifen.   | Die Verbindung geht ohne Probleme.   |
+| Firewall Status   | Die Firewall ist automatisch aktiv.   | Die Firewall ist direkt aktiv ohne einen zusätzlichen Command.    |
+| Firewall config | Nur die vordefinierten ports sind enabled. | Es sind nur die beiden Vordefinierten Ports offen. |
+| Firewall config | Via Port 443 kann die Webseite nicht aufgerufen werden. | Via Port 443 kann die Webseite nicht geladen werden. |
+| Webpage anpassung | Die neue Webseite wird angezeigt. | Die angepasste Webseite wird angezeigt. |
+| Webseiten aufruf| Die Webseite kann aufgerufen werden. | Die Webseite wird angezeigt. |
