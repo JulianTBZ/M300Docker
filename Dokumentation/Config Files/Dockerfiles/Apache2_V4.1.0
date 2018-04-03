@@ -16,6 +16,8 @@ RUN apt-get -y install apache2
 #Firewall
 RUN apt-get -y install ufw
 
+COPY ufwconfig.sh .
+
 #Reverse Proxy
 RUN a2enmod proxy
 RUN a2enmod proxy_http
