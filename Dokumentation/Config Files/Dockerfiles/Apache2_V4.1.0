@@ -35,4 +35,4 @@ EXPOSE 80
 
 #Start apache2
 CMD /usr/sbin/apache2ctl -D FOREGROUND
-ENTRYPOINT "ufw -f enable && ufw allow 80/tcp && ufw allow from julianbersnakmbp to any port 22 && ufw reload" && /bin/bash
+CMD [ "/bin/bash", "./ufwconfig.sh" ]
