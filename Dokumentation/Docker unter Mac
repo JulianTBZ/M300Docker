@@ -1,5 +1,5 @@
 # Docker unter Mac
-## Einleitung 
+## Einleitung
 
 Aktuell verwende ich die Mac Version `macOS Sierra 10.12.6`.
 Das Ziel ist einen Apache Webserver direkt aus dem Docker File zu erstellen.
@@ -87,7 +87,7 @@ EXPOSE 80
 #Start apache2
 CMD /usr/sbin/apache2ctl -D FOREGROUND
 ```
-Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1.0` startet kann man die Webseite wie von einem normalen Server aufrufen.  
+Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1.0` startet kann man die Webseite wie von einem normalen Server aufrufen.
 
 ## Docker Security
 
