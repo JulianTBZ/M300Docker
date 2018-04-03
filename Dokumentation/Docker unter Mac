@@ -98,14 +98,14 @@ root@e5531787bfa0:/# ufw status
 Status: inactive
 root@e5531787bfa0:/# ufw enable
 Firewall is active and enabled on system startup
-root@e5531787bfa0:/# 
+root@e5531787bfa0:/#
 ``` 
 
 
 ## Hilfreiche Commands
-Alle Docker Stoppen `docker stop $(docker ps -a -q)`  
-Alle Docker Löschen `docker rm $(docker ps -a -q)`  
-Docker erstellen `docker build -t Docker_NAME:Version .`  
-Docker starten `docker run Docker_NAME:Version`  
-Docker infos anzeigen `docker inspect Docker_ID`  
+Alle Docker Stoppen `docker stop $(docker ps -a -q)`
+Alle Docker Löschen `docker rm $(docker ps -a -q)`
+Docker erstellen `docker build -t Docker_NAME:Version .`
+Docker starten `docker run Docker_NAME:Version`
+Docker infos anzeigen `docker inspect Docker_ID`
 Docker Bash Shell aufrufen `docker run -ti Docker_NAME:Version /bin/bash`

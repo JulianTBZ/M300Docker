@@ -16,8 +16,6 @@ RUN apt-get -y install apache2
 #Firewall
 RUN apt-get -y install ufw
 
-COPY ufwconfig.sh .
-
 #Reverse Proxy
 RUN a2enmod proxy
 RUN a2enmod proxy_http
@@ -37,4 +35,6 @@ EXPOSE 80
 
 #Start apache2
 CMD /usr/sbin/apache2ctl -D FOREGROUND
-CMD [ "/bin/bash", "./ufwconfig.sh" ]
+ADD ufwconfig.sh .
+RUN chmod +x ./ufwconfig.sh
+ENTRYPOINT ["./ufwconfig.sh"]
