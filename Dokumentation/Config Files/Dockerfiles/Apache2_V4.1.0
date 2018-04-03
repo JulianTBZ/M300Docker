@@ -1,0 +1,38 @@
+FROM ubuntu:latest
+
+#New Repository
+CMD ["bash"]
+RUN echo "deb http://security.ubuntu.com/ubuntu trusty-security main universe" >> /etc/apt/sources.list
+
+#Install updates
+RUN apt-get update
+RUN apt-get -y install apt-utils
+RUN apt-get -y upgrade
+
+#Install Webserver
+RUN apt-get -y install apache2
+
+#Security
+#Firewall
+RUN apt-get -y install ufw
+
+#Reverse Proxy
+RUN a2enmod proxy
+RUN a2enmod proxy_http
+RUN a2enmod proxy_balancer
+RUN a2enmod lbmethod_byrequests
+
+CMD systemctl restart apache2
+
+#Change config
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+
+EXPOSE 80
+
+#Start apache2
+CMD /usr/sbin/apache2ctl -D FOREGROUND
+ENTRYPOINT "ufw -f enable && ufw allow 80/tcp && ufw allow from julianbersnakmbp to any port 22 && ufw reload" && /bin/bash
