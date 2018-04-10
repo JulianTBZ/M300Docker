@@ -120,12 +120,14 @@ Dieser Container hat den Vorteil, dass er direkt ein GUI für das Monitoring der
 Um die Sicherheit meiner Dockercontainer zu erhöhen habe ich ab V5 noch einen eigenen Benuter für den Docker erstellt. Dieser Benutzer verfügt über weniger Rechte als der Root user. Somit erhöht sich die Sicherheit der gesamten Umgebung. Um sich vor z.B. DosAngriffen besser zu schützen, kann man die Max Ressourcen eines Containers begrenzen. Somit kann nicht die gesamte Leistung des Hostes aufgefressen werden. 
 
 Mit dem folgenden Befehl kann das MAX verfügbare RAM angepasst werden. 
-`docker run -m 2096m --memory-swap 2096m `
+`docker run -m 2096m --memory-swap 2096m`
 | Parameter | Beschreibung | 
 | -------- | -------- | 
 | -m/--memory= | Max Anzahl Megabite die einem Container zur verfügung stehen. |
 | --memory-swap | Max Anzahl Megabite die auf die Disk geschrieben werden dürfen. |
-| --oom-kill-disable | Beim erreichen der Max. Anzahl Memory fängt der Kernel standard mässig an Prozesse zu beenden |
+| --oom-kill-disable | Beim erreichen der Max. Anzahl Memory fängt der Kernel standard mässig an Prozesse zu beenden. Mit diesem Parameter wird das deaktiviert.  |
+
+
 
 ## Testing
 
@@ -139,7 +141,6 @@ Mit dem folgenden Befehl kann das MAX verfügbare RAM angepasst werden.
 | UFW Konfiguration| Die Firewall wird automatisch konfiguriert | Die Firewall wird nicht automatisch konfiguriert, das Script muss noch manuell ausgeführt werden.  |
 | Lokale Datei Copy | Das Lokal gespeicherte Script wird in den Container kopiert | Das Vorgesehene Script wird automatisch im Docker zur Verfügung gestellt und kann problemlos ausgeführt werden. |
 | Neuer Benutzer | Es wird ein neuer Benutzer angelegt | docker_user existiert im /etc/passwd das bedeutet, dass er existiert. |
-| | | |
 
 ## Hilfreiche Commands
 | Beschreibung | Command |
@@ -151,4 +152,3 @@ Mit dem folgenden Befehl kann das MAX verfügbare RAM angepasst werden.
 | Docker infos anzeigen | `docker inspect Docker_ID` |
 | Docker Bash Shell aufrufen | `docker run -ti Docker_NAME:Version /bin/bash` |
 | Docker Run mit Parameter | `docker run -p 80:80 julianbersnak/apache2:1.0` |
-|||
