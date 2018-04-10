@@ -109,18 +109,21 @@ Dafür gibt es Zahlreiche Metoden. Die einfachste aber nicht sehr übersichtlich
 | :---------- | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | ----------: |
 | bb2a1f7d72ed | julianbersnak/apache2:4.2 | 1.45% | 36.81MiB / 1.952GiB | 1.84% | 303kB / 93MB | 0B / 0B | 12 |
 
-Eine bessere und vorallem Detailiertere und Übersichtlichere Methode ist mit dem cAdvisor Comtainer. 
+Eine bessere und vorallem Detailiertere und Übersichtlichere Methode ist mit dem cAdvisor Container. 
 Dieser kann auch sehr einfach eingesetzt werden. Es muss nur der folgende Befehl eingegeben werden. Anschliessend kann der Container vom Webbrowser angesprochen werden. 
 
 `docker run -d --name cadvisor -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker/:/var/lib/docker:ro -p 8080:8080 google/cadvisor:latest`
 
 Dieser Container hat den Vorteil, dass er direkt ein GUI für das Monitoring der Ressourcen mitliefert.
 
+![cAdvisor Image](./Images/cAdvisor.png "cAdvisor Screenshot")
+
 ## Docker Sicherheit
 Um die Sicherheit meiner Dockercontainer zu erhöhen habe ich ab V5 noch einen eigenen Benuter für den Docker erstellt. Dieser Benutzer verfügt über weniger Rechte als der Root user. Somit erhöht sich die Sicherheit der gesamten Umgebung. Um sich vor z.B. DosAngriffen besser zu schützen, kann man die Max Ressourcen eines Containers begrenzen. Somit kann nicht die gesamte Leistung des Hostes aufgefressen werden. 
 
 Mit dem folgenden Befehl kann das MAX verfügbare RAM angepasst werden. 
 `docker run -m 2096m --memory-swap 2096m`
+
 | Parameter | Beschreibung | 
 | -------- | -------- | 
 | -m/--memory= | Max Anzahl Megabite die einem Container zur verfügung stehen. |
