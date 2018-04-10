@@ -7,24 +7,24 @@ Dieses soll jeder Zeit erneut ausgeführt und duppliziert werden können.
 
 ## Docker installation
 
-Als erstes muss Docker auf dem Mac installiert werden. 
-Die aktuelle Version kann unter dem folgenden Link heruntergeladen werden. 
+Als erstes muss Docker auf dem Mac installiert werden.
+Die aktuelle Version kann unter dem folgenden Link heruntergeladen werden.
 [https://download.docker.com/mac/stable/Docker.dmg]
 
-Nach dem Download kann das DMG wie eine normale App installiert und gestartet werden. 
-Docker wird während der Installation die Administrationsrechte abfragen. 
+Nach dem Download kann das DMG wie eine normale App installiert und gestartet werden.
+Docker wird während der Installation die Administrationsrechte abfragen.
 Diese werden benötigt um den Docker komplett installieren zu können.
-Sobald Docker installiert wurde wird ein Symbol in der Menu-Leiste angezeigt. 
+Sobald Docker installiert wurde wird ein Symbol in der Menu-Leiste angezeigt.
 
 ## Apache2 Dockerfile erster Versuch
 
 Als erstes möchte ich versuchen einen Docker mit Apache2 zu erstellen.
-Mein erstes Testfile sieht wie folgt aus. 
+Mein erstes Testfile sieht wie folgt aus.
 ```
 FROM ubuntu
 
 RUN apt-get update
-RUN apt-get install -y apache2 && apt-get autoremove 
+RUN apt-get install -y apache2 && apt-get autoremove
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -43,26 +43,26 @@ Anschliessend werden mit `RUN` die benötigten Befehle ausgeführt.
 Mir dem Befehl `ENV` werden noch einige anpassungen an der Configuration gemacht.
 
 ### Build Dockerfile
-`docker build -t julianbersnak/apache2:1.0 .`  
+`docker build -t julianbersnak/apache2:1.0 .`
 Mit diesem Befehl kann aus dem Dockerfile ein image erstellt werden.
 Nach -t kann der Name des Images angegeben werden.
 
-Mit `docker images` werden alle verfügbaren images angezeigt.   
+Mit `docker images` werden alle verfügbaren images angezeigt.
 ### Run Docker image
 Mit dem Befehl ` docker run -ti julianbersnak/apache2:1.0 /bin/bash` kommen wir auf die Command Shell unseres zuvor erstellten Docker Containers. Die Shell kann normal verwendet werden, wie wenn man sich via SSH auf eine VM verbinden würde. Da es sich aber nicht um eine vollständige VM handelt, sondern um eine minimierte Version. Kann es sein das nicht alle Befehle oder Verzeichnisse vorhanden sind, welche bei einer VM vorhanden wären.  Mit dem Befehl `exit` kann der Docker Container wieder verlassen werden.
 
 ### Docker infos anzeigen
-Nachdem man den Docker Container wieder verlassen hat, kann man mit `docker ps -a` die Container history anzeigen. Diese sollte ähnlich wie die folgende liste aussehen. 
+Nachdem man den Docker Container wieder verlassen hat, kann man mit `docker ps -a` die Container history anzeigen. Diese sollte ähnlich wie die folgende liste aussehen.
 
 | CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
-| :---------- | :----------: | :----------: | :----------: | :----------: | :----------: | ----------: | 
+| :---------- | :----------: | :----------: | :----------: | :----------: | :----------: | ----------: |
 | 6f3f9a255dd | julianbersnak/apache2:1.0 | "/bin/bash" | 2 minutes ago | Up 2 minutes | 80/tcp | wizardly_heisenberg |
 
-Mir `docker inspect 6f3f9a255dd` können die infos des Containers angezeigt werden. So kann man einfach den Hostnamen und die IP herausfinden. Es werden jedoch noch viel mehr informationen angezeigt. Jedoch kann ich nicht via Browser auf den Webserver zugreiffen. 
+Mir `docker inspect 6f3f9a255dd` können die infos des Containers angezeigt werden. So kann man einfach den Hostnamen und die IP herausfinden. Es werden jedoch noch viel mehr informationen angezeigt. Jedoch kann ich nicht via Browser auf den Webserver zugreiffen.
 
 ## Apache2 Dockerfile zweiter Versuch
 
-Im zweiten Docker file installiere ich noch zusätzlich die aktuellen Upgrades. 
+Im zweiten Docker file installiere ich noch zusätzlich die aktuellen Upgrades.
 
 ```
 FROM ubuntu:latest
@@ -90,7 +90,6 @@ CMD /usr/sbin/apache2ctl -D FOREGROUND
 Wenn man den neuen Docker jetzt mit `docker run -p 80:80 julianbersnak/apache2:1.0` startet kann man die Webseite wie von einem normalen Server aufrufen.
 
 ## Docker Security
-
 ### Uncomplicated Firewall (UFW)
 Die Installation der Firewall direkt aus dem Dockerfile geht ohne Probleme. Die Firewall wird korrekt installiert und kann direkt Konfiguriert und gestartet werden. Was leider bisher noch nicht geht ist, dass die Firewall auch automatisch gestartet wird. Obwohl der Befehl dazu im Dockerfile integriert ist, ist der Status der Firewall nach dem Start `inactive`.
 ```
@@ -101,11 +100,34 @@ Firewall is active and enabled on system startup
 root@e5531787bfa0:/#
 ``` 
 
+## Docker Monitoring
+Da man duzende von Containers Problemlos auf dem System laufen lassen kann. Ist es wichtig, dass man immer über die verfügbaren Ressourcen informiert ist. Es soll direkt erkennbar sein wie gut die Ressourcen des Hostes ausgelastet sind und ob allenfalls ein Container auf einen anderen Host verschoben werden muss. 
+
+Dafür gibt es Zahlreiche Metoden. Die einfachste aber nicht sehr übersichtliche Methode ist direkt in der Commandline. Mit dem Befehl `docker stats` werden die von den Container benötigten Ressourcen angezeigt. 
+
+Eine bessere und vorallem Detailiertere und Übersichtlichere Methode ist mit dem cAdvisor Comtainer. 
+Dieser kann auch sehr einfach eingesetzt werden. Es muss nur der folgende Befehl eingegeben werden. Anschliessend kann der Container vom Webbrowser angesprochen werden. 
+
+`docker run -d --name cadvisor -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker/:/var/lib/docker:ro -p 8080:8080 google/cadvisor:latest`
+
+Dieser Container hat den Vorteil, dass er direkt ein GUI für das Monitoring der Ressourcen mitliefert.
+
+## Docker Sicherheit
 
 ## Hilfreiche Commands
 Alle Docker Stoppen `docker stop $(docker ps -a -q)`
+
 Alle Docker Löschen `docker rm $(docker ps -a -q)`
+
 Docker erstellen `docker build -t Docker_NAME:Version .`
+
 Docker starten `docker run Docker_NAME:Version`
+
 Docker infos anzeigen `docker inspect Docker_ID`
+
 Docker Bash Shell aufrufen `docker run -ti Docker_NAME:Version /bin/bash`
+
+Docker Run mit Parameter `docker run -p 80:80 julianbersnak/apache2:1.0`
+
+
+## Testing
